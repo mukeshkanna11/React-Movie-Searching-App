@@ -27,11 +27,11 @@ const MoviePage = () => {
     <div className="p-4">
       <img src={movie.Poster} alt={movie.Title} className="w-full max-w-md mx-auto font-Poppins" />
       <h1 className="mt-4 text-3xl font-bold font-Poppins">{movie.Title}</h1>
-      <p>{movie.Year}</p>
+      <p className='text-blue-500'>{movie.Year}</p>
       <p>{movie.Genre}</p>
       <p>{movie.Plot}</p>
       <p>Cast: {movie.Actors}</p>
-      <p>Rating: {movie.imdbRating}</p>
+      <p className='text-red-500'>Rating: {movie.imdbRating}</p>
     </div>
   );
 };
