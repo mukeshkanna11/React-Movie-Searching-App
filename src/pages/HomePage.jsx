@@ -15,7 +15,6 @@ const HomePage = () => {
     setError('');
     try {
       const data = await searchMovies(query, page, type);
-      console.log("API Response:", data); // For debugging
       if (data.Response === 'True') {
         setMovies(data.Search);
         setTotalPages(Math.ceil(data.totalResults / 10));
@@ -36,29 +35,43 @@ const HomePage = () => {
   }, [query, page, type]);
 
   return (
-    <div className="p-4">
-      <input
-        type="text"
-        placeholder="Search for movies..."
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        className="w-full p-2 mb-4 border"
-      />
-      <select
-        onChange={(e) => setType(e.target.value)}
-        className="w-full p-2 mb-4 border font-Poppins"
-      >
-        <option value="">All Types</option>
-        <option value="movie">Movies</option>
-        <option value="series">Series</option>
-        <option value="episode">Episodes</option>
-      </select>
-      {error && <p className="text-red-500 font-Poppins">{error}</p>}
-      <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 font-Poppins">
+    <div className="max-w-screen-xl p-6 mx-auto">
+      {/* Search Section */}
+      <div className="flex flex-col items-center mb-8">
+        <h1 className="mb-4 text-2xl italic font-bold font-poppins">Welcome to Movie Search</h1>
+        <div className="w-full max-w-lg space-y-4">
+          {/* Search Input */}
+          <input
+            type="text"
+            placeholder="Search for movies..."
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            className="w-full p-3 text-lg border border-gray-300 rounded-lg shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          {/* Select Box */}
+          <select
+            onChange={(e) => setType(e.target.value)}
+            className="w-full p-3 text-lg italic border border-gray-300 rounded-lg shadow-lg font-poppins focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="">All Types</option>
+            <option value="movie">Movies</option>
+            <option value="series">Series</option>
+            <option value="episode">Episodes</option>
+          </select>
+        </div>
+      </div>
+
+      {/* Error Handling */}
+      {error && <p className="italic text-center text-red-500 font-poppins">{error}</p>}
+
+      {/* Movies Grid Section */}
+      <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {movies.map((movie) => (
           <MovieCard key={movie.imdbID} movie={movie} />
         ))}
       </div>
+
+      {/* Pagination Section */}
       {movies.length > 0 && (
         <Pagination currentPage={page} totalPages={totalPages} onPageChange={setPage} />
       )}

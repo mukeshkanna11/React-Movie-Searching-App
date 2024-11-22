@@ -20,18 +20,36 @@ const MoviePage = () => {
     fetchMovie();
   }, [id]);
 
-  if (error) return <p className="text-red-500 font-Poppins">{error}</p>;
-  if (!movie) return <p>Loading...</p>;
+  if (error) return <p className="mt-4 italic font-semibold text-center text-red-500 font-poppins">{error}</p>;
+  if (!movie) return <p className="mt-4 italic text-center font-poppins">Loading...</p>;
 
   return (
-    <div className="p-4">
-      <img src={movie.Poster} alt={movie.Title} className="w-full max-w-md mx-auto font-Poppins" />
-      <h1 className="mt-4 text-3xl font-bold font-Poppins">{movie.Title}</h1>
-      <p className='text-blue-500'>{movie.Year}</p>
-      <p>{movie.Genre}</p>
-      <p>{movie.Plot}</p>
-      <p>Cast: {movie.Actors}</p>
-      <p className='text-red-500'>Rating: {movie.imdbRating}</p>
+    <div className="min-h-screen p-6 italic bg-gray-50 font-poppins">
+      <div className="max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-md">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+          {/* Movie Poster */}
+          <div className="flex items-center justify-center col-span-1 p-4">
+            <img
+              src={movie.Poster !== 'N/A' ? movie.Poster : 'https://via.placeholder.com/300x450?text=No+Image'}
+              alt={movie.Title}
+              className="w-full h-auto max-w-xs rounded-lg shadow-lg"
+            />
+          </div>
+
+          {/* Movie Details */}
+          <div className="col-span-2 p-4">
+            <h1 className="mb-2 text-3xl font-bold text-gray-800 font-poppins">{movie.Title}</h1>
+            <p className="mb-1 text-gray-600"><strong>Year:</strong> {movie.Year || 'N/A'}</p>
+            <p className="mb-1 text-gray-600"><strong>Genre:</strong> {movie.Genre || 'N/A'}</p>
+            <p className="mb-1 text-gray-600"><strong>Plot:</strong> {movie.Plot || 'N/A'}</p>
+            <p className="mb-1 text-gray-600"><strong>Cast:</strong> {movie.Actors || 'N/A'}</p>
+            <p className="mb-1 text-gray-600">
+              <strong>Rating:</strong>{' '}
+              <span className="text-red-500">{movie.imdbRating || 'N/A'}</span>
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
